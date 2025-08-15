@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meals/data/dummy_data.dart';
 import 'package:meals/screen/category.dart';
+import 'package:meals/screen/meals.dart';
 
 
 final theme = ThemeData(
@@ -24,7 +26,10 @@ class App extends StatelessWidget{
     
     return MaterialApp(
       theme: theme,
-      home: CategoryScreen(),
+      home: MealsScreen(
+        title: 'some category data', 
+        meals: dummyMeals
+        ),
     );
   }
 }
