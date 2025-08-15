@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/widgets/meals_item.dart';
 
 class MealsScreen extends StatelessWidget{
 
@@ -22,7 +23,7 @@ class MealsScreen extends StatelessWidget{
           ),
           const SizedBox(height: 16,),
           Text(
-            "halo", 
+            "Try selecting a diffrent category", 
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
           ),
@@ -37,9 +38,7 @@ class MealsScreen extends StatelessWidget{
       content =  ListView.builder(
           itemCount: meals.length,
           itemBuilder: 
-            (ctx, index)=> Text(
-              meals[index].title
-              ),
+            (ctx, index)=> MealsItem(meal: meals[index]),
         ) ;
       }
     return Scaffold(
