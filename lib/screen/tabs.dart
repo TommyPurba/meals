@@ -17,13 +17,24 @@ class _TabsScreenState extends State<TabsScreen>{
   int _selectedPageIdex = 0;
   final List<Meal> _favoriteMeals = [];
 
+  void _showInfoMessage(String message){
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   void _toggleMealFavoriteStatus( Meal meal ){
     final isExisting = _favoriteMeals.contains(meal);
 
     if(isExisting){
-      _favoriteMeals.remove(meal);
+      setState(() {
+         _favoriteMeals.remove(meal);
+         _showInfoMessage("Meal is no longer a favorite");
+      });
     }else{
-      _favoriteMeals.add(meal);
+     setState(() {
+        _favoriteMeals.add(meal);
+        _showInfoMessage("Marked as a favorite");
+     });
     }
   }
 
@@ -40,8 +51,8 @@ class _TabsScreenState extends State<TabsScreen>{
 
   //kondisi untuk ngececk page mana yang akan di tampilkan di appbar dan body
     if (_selectedPageIdex == 1){
-      activeIndex = MealsScreen(meals: [], onToggleMealFavorite: _toggleMealFavoriteStatus,);
-      activepageScreen = "Favorite";
+      activeIndex = MealsScreen(meals: _favoriteMeals, onToggleMealFavorite: _toggleMealFavoriteStatus,);
+      activepageScreen = "Your Favorite";
     }
 
     return Scaffold(
