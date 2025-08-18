@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/models/meal.dart';
 import 'package:meals/screen/category.dart';
 import 'package:meals/screen/meals.dart';
 
@@ -14,6 +15,17 @@ class TabsScreen extends StatefulWidget{
 
 class _TabsScreenState extends State<TabsScreen>{
   int _selectedPageIdex = 0;
+  final List<Meal> _favoriteMeals = [];
+
+  void _toggleMealFavoriteStatus( Meal meal ){
+    final isExisting = _favoriteMeals.contains(meal);
+
+    if(isExisting){
+      _favoriteMeals.remove(meal);
+    }else{
+      _favoriteMeals.add(meal);
+    }
+  }
 
   void selectedPage(int index){
     setState(() {
@@ -23,12 +35,12 @@ class _TabsScreenState extends State<TabsScreen>{
   @override
   Widget build(BuildContext context) {
 
-    Widget activeIndex = CategoryScreen();
+    Widget activeIndex = CategoryScreen(onToggleMealFavorite: _toggleMealFavoriteStatus,);
     var activepageScreen = "Category";
 
   //kondisi untuk ngececk page mana yang akan di tampilkan di appbar dan body
     if (_selectedPageIdex == 1){
-      activeIndex = MealsScreen(meals: []);
+      activeIndex = MealsScreen(meals: [], onToggleMealFavorite: _toggleMealFavoriteStatus,);
       activepageScreen = "Favorite";
     }
 
