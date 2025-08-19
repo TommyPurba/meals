@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screen/category.dart';
 import 'package:meals/screen/filter.dart';
 import 'package:meals/screen/meals.dart';
 import 'package:meals/widgets/main_drawer.dart';
+
+
+const kInitialFilters = {
+  Filter.gluttenFree : false,
+  Filter.lactoseFree : false,
+  Filter.vegentarian : false,
+  Filter.vegan : false,
+};
 
 class TabsScreen extends StatefulWidget{
   const TabsScreen({super.key});
@@ -18,6 +27,8 @@ class TabsScreen extends StatefulWidget{
 class _TabsScreenState extends State<TabsScreen>{
   int _selectedPageIdex = 0;
   final List<Meal> _favoriteMeals = [];
+
+  Map<Filter, bool> _selectFilters = kInitialFilters;
 
   void _showInfoMessage(String message){
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -50,10 +61,13 @@ class _TabsScreenState extends State<TabsScreen>{
     Navigator.of(context).pop();
        if(identifier == "filter"){
     final result = await Navigator.of(context).push<Map<Filter, bool>>(MaterialPageRoute(
-        builder: (ctx) => FilterScreen()
+        builder: (ctx) => FilterScreen(currentFilters: _selectFilters,)
       ));
 
-      print(result);
+      setState(() {
+        _selectFilters = result ?? kInitialFilters;
+      });
+     
     }
 
     // ini fungsinya ketika di klik tombul back di bawa screen mobile akan langsung keluar dari aplikasi
@@ -65,8 +79,24 @@ class _TabsScreenState extends State<TabsScreen>{
   }
   @override
   Widget build(BuildContext context) {
-
-    Widget activeIndex = CategoryScreen(onToggleMealFavorite: _toggleMealFavoriteStatus,);
+    final availAbleMeals = dummyMeals.where(
+      (meal) {
+        if(_selectFilters[Filter.gluttenFree]! && !meal.isGlutenFree){
+            return false;
+        }
+         if(_selectFilters[Filter.lactoseFree]! && !meal.isLactoseFree){
+            return false;
+        }
+         if(_selectFilters[Filter.vegentarian]! && !meal.isVegetarian){
+            return false;
+        }
+         if(_selectFilters[Filter.vegan]! && !meal.isVegan){
+            return false;
+        }
+        return true;
+      }
+    ).toList();
+    Widget activeIndex = CategoryScreen(onToggleMealFavorite: _toggleMealFavoriteStatus, availAbleMeals: availAbleMeals,);
     var activepageScreen = "Category";
 
   //kondisi untuk ngececk page mana yang akan di tampilkan di appbar dan body
