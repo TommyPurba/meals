@@ -46,12 +46,14 @@ class _TabsScreenState extends State<TabsScreen>{
     });
   }
 
-  void _selectpage(String identifier) {
+  void _selectpage(String identifier) async {
     Navigator.of(context).pop();
        if(identifier == "filter"){
-      Navigator.of(context).push(MaterialPageRoute(
+    final result = await Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => FilterScreen()
       ));
+
+      print(result);
     }
 
     // ini fungsinya ketika di klik tombul back di bawa screen mobile akan langsung keluar dari aplikasi
