@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screen/category.dart';
+import 'package:meals/screen/filter.dart';
 import 'package:meals/screen/meals.dart';
 import 'package:meals/widgets/main_drawer.dart';
 
@@ -46,11 +47,19 @@ class _TabsScreenState extends State<TabsScreen>{
   }
 
   void _selectpage(String identifier) {
-    if(identifier == "filter"){
-
-    }else{
-      Navigator.of(context).pop();
+    Navigator.of(context).pop();
+       if(identifier == "filter"){
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => FilterScreen()
+      ));
     }
+
+    // ini fungsinya ketika di klik tombul back di bawa screen mobile akan langsung keluar dari aplikasi
+    // if(identifier == "filter"){
+    //   Navigator.of(context).pushReplacment(MaterialPageRoute(
+    //     builder: (ctx) => FilterScreen()
+    //   ));
+    // }
   }
   @override
   Widget build(BuildContext context) {
