@@ -20,17 +20,18 @@ class _FilterScreenState extends State<FilterScreen>{
     appBar: AppBar(
       title: const Text('Your Filters',),
     ),
-    drawer: MainDrawer(
-      onSelectScreen: (identifier){
-        Navigator.of(context).pop();
-        if(identifier == "meals"){
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (ctx) => TabsScreen()
-          )
-          );
-        }
-    },
-    ),
+    // DRAWER DIPAKAI APBILA DI MENGGUNAKAN BACK DI ATAS SCALFOLD
+    // drawer: MainDrawer(
+    //   onSelectScreen: (identifier){
+    //     Navigator.of(context).pop();
+    //     if(identifier == "meals"){
+    //       Navigator.of(context).pushReplacement(MaterialPageRoute(
+    //         builder: (ctx) => TabsScreen()
+    //       )
+    //       );
+    //     }
+    // },
+    // ),
     body: Column(
       children: [
         SwitchListTile(
