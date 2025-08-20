@@ -7,10 +7,13 @@ import 'package:meals/screen/meals.dart';
 import 'package:meals/widgets/category_grid_item.dart';
 
 class CategoryScreen extends StatelessWidget{
-  const CategoryScreen({super.key, required this.onToggleMealFavorite, required this.availAbleMeals});
+  const CategoryScreen({super.key,  required this.availAbleMeals});
+  // tidak dipakai lagi karena sudah pakai statemanagen river
+  // const CategoryScreen({super.key, required this.onToggleMealFavorite, required this.availAbleMeals});
 
   final List<Meal> availAbleMeals;
-  final void Function(Meal meal) onToggleMealFavorite;
+   // tidak dipakai lagi karena sudah pakai statemanagen river
+  // final void Function(Meal meal) onToggleMealFavorite;
 
   void _selectCategory (BuildContext context, Category category){
     final filteredMeals = availAbleMeals.where(
@@ -20,8 +23,7 @@ class CategoryScreen extends StatelessWidget{
       MaterialPageRoute(
         builder: (ctx)=> MealsScreen(
           title: category.title, 
-          meals: filteredMeals,
-          onToggleMealFavorite: onToggleMealFavorite,
+          meals: filteredMeals
           )
         )
       );
