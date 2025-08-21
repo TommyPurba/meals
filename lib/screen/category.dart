@@ -30,6 +30,8 @@ class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProvid
       lowerBound: 0,
       upperBound: 1,
     );
+
+    _animationController.forward();
   }
 
   @override
@@ -54,7 +56,9 @@ class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return  GridView(
+    return AnimatedBuilder(
+      animation: _animationController,
+      child: GridView(
         padding: EdgeInsets.all(24),
         gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -68,6 +72,38 @@ class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProvid
             _selectCategory(context, category);
           },)
         ],
-      );
+      ), 
+
+      //cara terakhir dan paling optimize 
+      builder: (context, child) => SlideTransition(
+        position:  Tween(
+            begin: Offset(0, 0.3),
+            end: Offset(0, 0),
+          ).animate(
+            CurvedAnimation(
+              parent: _animationController, 
+              curve: Curves.easeInOut,
+            )
+          ), 
+      child: child,
+      ),
+      // cara kedua
+      // builder: (context, child) => SlideTransition(
+      //   position: _animationController.drive(
+      //     Tween(
+      //       begin: Offset(0, 0.3),
+      //       end: Offset(0, 0),
+      //     )
+      //   ), 
+      // child: child,
+      // ),
+
+      // ini dipakai untuk animasi juga tapi ada beberapa cara animasi (ini cara pertama)
+      // builder: (context, child) =>Padding(padding: EdgeInsets.only(
+      //     top: 100 - _animationController.value * 100
+      // ),
+      // child: child,
+      // )
+    );
   }
 }
