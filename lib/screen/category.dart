@@ -6,17 +6,40 @@ import 'package:meals/models/meal.dart';
 import 'package:meals/screen/meals.dart';
 import 'package:meals/widgets/category_grid_item.dart';
 
-class CategoryScreen extends StatelessWidget{
+class CategoryScreen extends StatefulWidget{
   const CategoryScreen({super.key,  required this.availAbleMeals});
   // tidak dipakai lagi karena sudah pakai statemanagen river
   // const CategoryScreen({super.key, required this.onToggleMealFavorite, required this.availAbleMeals});
 
   final List<Meal> availAbleMeals;
-   // tidak dipakai lagi karena sudah pakai statemanagen river
-  // final void Function(Meal meal) onToggleMealFavorite;
+
+  @override
+  State<CategoryScreen> createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProviderStateMixin{
+   
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+      lowerBound: 0,
+      upperBound: 1,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   void _selectCategory (BuildContext context, Category category){
-    final filteredMeals = availAbleMeals.where(
+    final filteredMeals = widget.availAbleMeals.where(
       (meal)=> meal.categories.contains(category.id)
     ).toList();
     Navigator.of(context).push(
