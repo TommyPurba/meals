@@ -27,14 +27,14 @@ class MealDetailScreen extends ConsumerWidget{
                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(wasAdded ? 'Meal added as a favorite.' : 'Meal removed')));
             },
              icon: AnimatedSwitcher(
-              duration: Duration(microseconds: 300),
+              duration: Duration(milliseconds: 300),
               transitionBuilder: (child, animation) { 
                  return RotationTransition(
-                  turns: animation,
+                  turns: Tween<double>(begin: 0.8, end: 1).animate(animation),
                   child: child,
                  ); 
               },
-              child:  Icon(isFavorite? Icons.star_outlined :Icons.star_outline),
+              child:  Icon(isFavorite? Icons.star_outlined :Icons.star_outline, key: ValueKey(isFavorite),),
              )
           )
         ],
